@@ -59,6 +59,14 @@
       0% { opacity: 0; }
       100% { opacity: 1; }
     }
+
+    /* Video Styling */
+    .video-container {
+      margin: 20px auto;
+      width: 560px;
+      max-width: 90%;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -68,10 +76,19 @@
   <!-- Intro Text -->
   <div class="intro">
     <h1>Welcome to My World</h1>
-    <p>hope you enjoy roblox script </p>
-    <!-- Copy Button -->
-	<h2>SCRIPT FOR CAT PIECE</h2>
+    <p>Hope you enjoy Roblox script</p>
+    <h2>SCRIPT FOR CAT PIECE</h2>
     <button class="copy-button" onclick="copyText(this)">loadstring(game:HttpGet("https://raw.githubusercontent.com/HA-arch-sketch/Tester/refs/heads/main/obf_2375Ka6cXlzluxp6rMVu3f4720p3sB9q7ON5N9t529BOFn9TCY2zt419fb21V3l0.lua.txt"))()</button>
+  </div>
+
+  <!-- YouTube Video -->
+  <div class="video-container">
+    <iframe width="560" height="315" 
+      src="https://www.youtube.com/embed/dQ5kKGyWTbc" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
   </div>
 
   <script>
@@ -120,8 +137,7 @@
         .then(() => {
           alert('Script copied!');
         })
-   
-     .catch(err => {
+        .catch(err => {
           console.error('Failed to copy: ', err);
         });
     }
