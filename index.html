@@ -1,168 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sample AI Integration</title>
-  <style>
-    /* Fullscreen setup */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      background-color: black;
-      color: #0f0;
-      font-family: monospace;
-    }
-
-    canvas {
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
-    .chat-container {
-      position: relative;
-      z-index: 1;
-      padding: 20px;
-    }
-
-    .chat-window {
-      border: 2px solid #0f0;
-      height: 400px;
-      overflow-y: auto;
-      padding: 10px;
-      margin-bottom: 20px;
-      background: rgba(0, 0, 0, 0.7);
-    }
-
-    .chat-input {
-      display: flex;
-    }
-
-    input {
-      flex: 1;
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid #0f0;
-      background: black;
-      color: #0f0;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      background-color: #0f0;
-      border: none;
-      color: black;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Matrix Rain Background -->
-  <canvas id="matrix"></canvas>
-
-  <!-- Chat Interface -->
-  <div class="chat-container">
-    <div class="chat-window" id="chatWindow">
-      <p><strong>Sample AI:</strong> Hello! How can I help you today?</p>
+    <div class="container">
+        <h1>Will you be my Valentine?</h1>
+        <div class="buttons">
+            <button class="yes-button" onclick="handleYesClick()">Yes</button>
+            <button class="no-button" onclick="handleNoClick()">No</button>
+        </div>
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+        </div>
     </div>
-    <div class="chat-input">
-      <input type="text" id="userInput" placeholder="what your question we can answer that..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-
-    // Set canvas dimensions to fit the screen
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array(columns).fill(1);
-
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#0f0';
-      ctx.font = `${fontSize}px monospace`;
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = String.fromCharCode(Math.random() * 128);
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height || Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-
-    setInterval(draw, 50);
-
-    // Adjust canvas size dynamically on resize
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drops.length = Math.floor(canvas.width / fontSize);
-      drops.fill(1);
-    });
-
-    // Sample AI integration
-    async function sendMessage() {
-      const inputField = document.getElementById('userInput');
-      const chatWindow = document.getElementById('chatWindow');
-      const userMessage = inputField.value;
-
-      if (userMessage.trim() === '') return;
-
-      // Display user message
-      const userParagraph = document.createElement('p');
-      userParagraph.innerHTML = `<strong>You:</strong> ${userMessage}`;
-      chatWindow.appendChild(userParagraph);
-      inputField.value = '';
-
-      // Call OpenAI API with your provided API key
-      try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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'
-          },
-          body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            messages: [{ role: 'user', content: userMessage }]
-          })
-        });
-
-        const data = await response.json();
-        const botMessage = data.choices[0].message.content;
-
-        // Display bot message
-        const botParagraph = document.createElement('p');
-        botParagraph.innerHTML = `<strong>Sample AI:</strong> ${botMessage}`;
-        chatWindow.appendChild(botParagraph);
-
-        // Auto-scroll to the bottom
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      } catch (error) {
-        console.error('Error:', error);
-        const errorParagraph = document.createElement('p');
-        errorParagraph.innerHTML = `<strong>Sample AI:</strong> Something went wrong. Please try again later.`;
-        chatWindow.appendChild(errorParagraph);
-      }
-    }
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
-    
